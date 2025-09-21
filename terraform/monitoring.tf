@@ -34,6 +34,7 @@ variable "kube_monitoring_stack_values" {
               - alertmanager.disslite.com
 
     prometheus:
+      enabled: true
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -89,12 +90,13 @@ variable "kube_monitoring_stack_values" {
     EOF
 }
 
+# Monitoring stack will be deployed via Helm CLI
 resource "helm_release" "kube_monitoring_stack" {
   name       = "kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   namespace  = "monitoring"
-  version    = "45.29.0"
+  version    = "61.6.0"
 
   create_namespace = true
 

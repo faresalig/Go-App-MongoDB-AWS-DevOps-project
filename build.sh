@@ -1,27 +1,38 @@
 #!/bin/bash
 
+set -e  #Any error will stop the script immediately (optional).
+
+# ========================
 # Variables
-cluster_name="cluster-1-test" # If you wanna change the cluster name make sure you change it in the terraform directory variables.tf (name_prefix & environment)
+# ========================
+cluster_name="cluster-1-dev"
 region="us-east-1"
 aws_id="460840353653"
-repo_name="goapp-survey" # If you wanna change the repository name make sure you change it in the k8s/app.yml (Image name) 
+repo_name="goapp-survey"
 image_name="$aws_id.dkr.ecr.$region.amazonaws.com/$repo_name:latest"
 domain="disslite.com"
-namespace="go-survey" # you can keep this variable or if you will change it remember to change the namespace in k8 manifests inside k8s directory
-# End of Variables
+namespace="go-survey"
 
-# update helm repos
+# ========================
+# Update Helm Repos
+# helm repo update
+# ========================
+# echo "--------------------Updating Helm Repos--------------------"
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx || true
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts || true
+helm repo add autoscaler https://kubernetes.github.io/autoscaler || true
 helm repo update
 
+# ========================
 # build the infrastructure
 echo "--------------------Creating EKS--------------------"
 echo "--------------------Creating ECR--------------------"
 echo "--------------------Creating EBS--------------------"
 echo "--------------------Deploying Ingress--------------------"
 echo "--------------------Deploying Monitoring--------------------"
-cd terraform && \ 
-terraform init
-terraform apply -auto-approve
+cd terraform && \
+terraform init && \
+terraform apply -auto-approve && \
 cd ..
 
 # update kubeconfig
@@ -78,4 +89,3 @@ echo " "
 echo " "
 
 echo -e "1. Navigate to your domain cpanel.\n2. Look for Zone Editor.\n3. Add CNAME Record to your domain.\n4. In the name type domain for your application.\n5. In the CNAME Record paste the ingress URL."
-

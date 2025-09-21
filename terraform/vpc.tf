@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
+  version = "5.1.0"
 
   name = "${local.cluster_name}-vpc"
   cidr = var.main_network_block

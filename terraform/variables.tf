@@ -1,11 +1,13 @@
 variable "aws_access_key" {
-  type    = string
-  default = ""
+  type        = string
+  description = "AWS Access Key"
+  sensitive   = true
 }
 
 variable "aws_secret_key" {
-  type    = string
-  default = ""
+  type        = string
+  description = "AWS Secret Key"
+  sensitive   = true
 }
 
 variable "name_prefix" {
@@ -15,18 +17,25 @@ variable "name_prefix" {
 }
 
 variable "region" {
-  type    = string
-  default = "us-east-1"
+  type        = string
+  default     = "us-east-1"
+  description = "AWS region to deploy resources."
+
+  validation {
+    condition     = contains(["us-east-1", "us-west-2", "eu-west-1"], var.region)
+    error_message = "Region must be one of: us-east-1, us-west-2, eu-west-1."
+  }
 }
 
 variable "environment" {
-  type    = string
-  default = "test"
+  type        = string
+  default     = "test"
+  description = "Environment name (e.g., dev, test, prod)."
 }
 
 variable "admin_users" {
   type        = list(string)
-  default     = ["triple-a"]
+  default     = ["Fares"]
   description = "List of Kubernetes admins."
 }
 
@@ -57,29 +66,29 @@ variable "zone_offset" {
 variable "asg_sys_instance_types" {
   type        = list(string)
   default     = ["t3a.medium"]
-  description = "List of EC2 instance machine types to be used in EKS for the system workload."
+  description = "List of EC2 instance types for system workloads in EKS."
 }
 
 variable "asg_dev_instance_types" {
   type        = list(string)
   default     = ["t3a.medium"]
-  description = "List of EC2 instance machine types to be used in EKS for development workload."
+  description = "List of EC2 instance types for development workloads in EKS."
 }
 
 variable "autoscaling_minimum_size_by_az" {
   type        = number
   default     = 1
-  description = "Minimum number of EC2 instances to auto-scale our EKS cluster on each AZ."
+  description = "Minimum number of EC2 instances to auto-scale our EKS cluster per AZ."
 }
 
 variable "autoscaling_maximum_size_by_az" {
   type        = number
   default     = 2
-  description = "Maximum number of EC2 instances to auto-scale our EKS cluster on each AZ."
+  description = "Maximum number of EC2 instances to auto-scale our EKS cluster per AZ."
 }
 
 variable "autoscaling_average_cpu" {
   type        = number
   default     = 60
-  description = "Average CPU threshold to auto-scale EKS EC2 instances."
+  description = "Average CPU threshold (percentage) to auto-scale EKS EC2 instances."
 }
