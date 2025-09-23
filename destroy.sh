@@ -1,7 +1,8 @@
 #!/bin/bash
 namespace="go-survey"
 repo_name="goapp-survey"
-
+region="us-east-1"
+aws_id="460840353653"
 #ECR Login
 echo "--------------------Login to ECR--------------------"
 aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $aws_id.dkr.ecr.$region.amazonaws.com
