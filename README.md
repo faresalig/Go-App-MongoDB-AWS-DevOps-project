@@ -2,8 +2,9 @@
 
 <img src=imgs/cover.png>
 
-This repository contains scripts and Kubernetes manifests for deploying the Go Survey application on an AWS EKS cluster with an accompanying ECR repository and EBS volumes. The deployment includes setting up an Ingress controller, monitoring with Prometheus and Grafana, and a continuous deployment pipeline.
+End-to-End DevOps Pipeline for Go-MongoDB Application on AWS EKS
 
+Architected and implemented a comprehensive DevOps solution deploying a Go-based survey application with MongoDB on AWS EKS using Infrastructure as Code (Terraform), featuring automated CI/CD pipelines with GitHub Actions, container orchestration with Kubernetes, and comprehensive monitoring stack with Prometheus, Grafana, and Alertmanager. Configured secure networking with VPC, private/public subnets, NAT Gateway, and NGINX Ingress Controller for load balancing and SSL termination. Established automated deployment workflows including ECR container registry integration, EBS persistent storage for databases, and DNS management for multi-service architecture accessibility.
 ## Prerequisites
 
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) configured with appropriate permissions
